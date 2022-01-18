@@ -40,7 +40,7 @@ while True:
     start_time=int(time.time())
     brk = 0
     while ret:
-        if int(time.time()-start_time >= blocktime*6 ):
+        if int(time.time()-start_time >= blocktime*60 ):
             sync = threading.Thread(target=bysync, args=(cu_pwd,camname))
             sync.start()
             break
