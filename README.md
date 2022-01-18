@@ -14,6 +14,10 @@
 
 `nohup python pyNvr.py &`
 
+使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu
+安装tmoe:
+`bash -c "$(curl -Lv gitee.com/mo2/linux/raw/master/debian.sh)"`
+
 附，常见IP摄像头串流地址:  
 >海康威视  
 >    主码流：  
