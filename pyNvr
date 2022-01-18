@@ -1,0 +1,39 @@
+import cv2
+import time
+
+
+pwd='G:/videos/cam01/'
+url='rtsp://admin:336.336.336@192.168.1.87:554/stream1'
+blocktime=1
+
+
+cap = cv2.VideoCapture(url)
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fps = cap.get(cv2.CAP_PROP_FPS)
+size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+
+
+
+
+while True:
+    #out = cv2.VideoWriter(pwd+'{}.avi'.format(str(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))), fourcc,fps, size)
+    cu_pwd = pwd+str(time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime()))+'.avi'
+
+    out = cv2.VideoWriter(cu_pwd, fourcc,fps, size)
+    ret,frame = cap.read()
+    start_time=int(time.time())
+    brk = 0
+    while ret:
+        if int(time.time()-start_time >= blocktime*6 ):
+            break
+        ret,frame = cap.read()
+        #cv2.imshow("frame",frame)
+        out.write(frame)
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+            #brk = 1
+            #break
+    #if brk == 1:
+        #break
+cv2.destroyAllWindows()
+cap.release()
+out.release()
