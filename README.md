@@ -14,30 +14,30 @@
 
 `nohup python pyNvr.py &`
 
-附，常见IP摄像头串流地址  
-海康威视  
-    主码流：  
-    rtsp://user:password@ip:554/h264/ch1/main/av_stream  
-    子码流：  
-    rtsp://user:password@ip:554/mpeg4/ch1/sub/av_stream  
-
-大华  
-    rtsp://username:password@ip:port/cam/realmonitor?channel=1&subtype=0  
-
-
-三星  
-    高码流rtsp地址：  
-    rtsp://user:password@ip:554/onvif/profile2/media.smp（720P）  
-    低码率rtsp地址  
-    rtsp://user:password@ip:554/onvif/profile3/media.smp  
-
-LG  
-    高码流（主码流）RTSP地址：  
-    rtsp://user:password@ip:554/Master-0  
-    低码流（子码流）RTSP地址：  
-    rtsp://user:password@ip:554/Slave-0  
-
-TP-Link/水星安防  
-    rtsp://user:password@ip:554/stream1  
-    rtsp://user:password@ip:554/stream2  
+附，常见IP摄像头串流地址:  
+>海康威视  
+>    主码流：  
+>    rtsp://user:password@ip:554/h264/ch1/main/av_stream  
+>    子码流：  
+>    rtsp://user:password@ip:554/mpeg4/ch1/sub/av_stream  
+>
+>大华  
+>    rtsp://username:password@ip:port/cam/realmonitor?channel=1&subtype=0  
+>
+>
+>三星  
+>    高码流rtsp地址：  
+>    rtsp://user:password@ip:554/onvif/profile2/media.smp（720P）  
+>    低码率rtsp地址  
+>    rtsp://user:password@ip:554/onvif/profile3/media.smp  
+>
+>LG  
+>    高码流（主码流）RTSP地址：  
+>    rtsp://user:password@ip:554/Master-0  
+>    低码流（子码流）RTSP地址：  
+>    rtsp://user:password@ip:554/Slave-0  
+>
+>TP-Link/水星安防  
+>    rtsp://user:password@ip:554/stream1  
+>    rtsp://user:password@ip:554/stream2  
 
