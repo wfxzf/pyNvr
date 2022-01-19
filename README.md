@@ -9,7 +9,9 @@
 `pip install opencv-python`  
 `bypy info`  
 复制链接粘贴到浏览器打开，登录，填写授权码。  
-
+创建保存视频的文件夹,例如：
+`mkdir /home/videos/cam01`  
+一定要创建好路径，并且跟配置的路径一致，最后一层文件夹的名称为摄像头名称（camname）,参数pwd写到倒数第二层文件夹，以//结尾即可。
 编辑pyNvr.py,修改配置（摄像头名称camname、串流地址url、本地存储路径pwd，单个视频时长blocktime,开启储存到百度网盘upyoby，上传完成后删除本地文件re_af_up）
 
 运行：  
@@ -34,7 +36,9 @@
 >大华  
 >    rtsp://username:password@ip:port/cam/realmonitor?channel=1&subtype=0  
 >
->
+>TP-Link/水星安防  
+>    rtsp://user:password@ip:554/stream1  
+>    rtsp://user:password@ip:554/stream2  
 >三星  
 >    高码流rtsp地址：  
 >    rtsp://user:password@ip:554/onvif/profile2/media.smp（720P）  
@@ -46,8 +50,6 @@
 >    rtsp://user:password@ip:554/Master-0  
 >    低码流（子码流）RTSP地址：  
 >    rtsp://user:password@ip:554/Slave-0  
->
->TP-Link/水星安防  
->    rtsp://user:password@ip:554/stream1  
->    rtsp://user:password@ip:554/stream2  
+
+
 
