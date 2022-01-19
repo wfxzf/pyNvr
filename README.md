@@ -14,9 +14,10 @@
 
 `nohup python pyNvr.py &`
 
-使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu  
+在安卓手机上，使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu  
 安装tmoe:  
 `bash -c "$(curl -Lv gitee.com/mo2/linux/raw/master/debian.sh)"`
+过程很简单，不多赘述了，图形界面没必要装。
 
 附，国内常见IP摄像头串流地址:  
 >海康威视  
