@@ -25,7 +25,7 @@
 编辑pyNvr.py,修改配置（摄像头名称camname、串流地址url、本地存储路径pwd，单个视频时长blocktime,开启储存到百度网盘upyoby，上传完成后删除本地文件re_af_up）
 
 运行：  
-`cd pyNvr`
+`cd pyNvr`  
 `nohup python pyNvr.py &`  
 
 ## 程序极其简陋，稳定和安全毫无保障，仅仅用于不含任何隐私信息、图省钱省事还想多一层云备份的情况
