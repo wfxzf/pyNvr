@@ -1,12 +1,21 @@
 # pyNvr
 这是一个用Python编写的NVR(网络硬盘录像机)脚本，  
 利用百度网盘进行视频的云存储
-可以将废旧的安卓手机变成NVR节省购买云存储的钱。
-## Windows Linux Mac
+可以将废旧的安卓手机变成NVR节省购买云存储的钱。  
+
+## 安卓手机
+在安卓手机上，使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu  
+安装tmoe:  
+`bash -c "$(curl -Lv gitee.com/mo2/linux/raw/master/debian.sh)"`  
+过程很简单，不多赘述了，图形界面没必要装。  
+  
+  
+**更建议使用Aidlux，安卓手机上Aidlux很方便，可以直接使用python，已经装好了opencv，比Termux更方便快捷。安装bypy并登录就可以直接使用了。**  
+
 安装python
 
 `pip install bypy`  
-`pip install opencv-python`  
+`pip install opencv-python`Aidlux不需要。  
 `bypy info`  
 复制链接粘贴到浏览器打开，登录，填写授权码。  
 创建保存视频的文件夹,例如：
@@ -16,15 +25,9 @@
 
 运行：  
 `nohup python pyNvr.py &`  
-## 安卓手机
-在安卓手机上，使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu  
-安装tmoe:  
-`bash -c "$(curl -Lv gitee.com/mo2/linux/raw/master/debian.sh)"`  
-过程很简单，不多赘述了，图形界面没必要装。  
-  
-  
-**安卓手机上Aidlux很方便，可以直接使用python，已经装好了opencv，比Termux更方便快捷。安装bypy并登录就可以直接使用了。**  
 
+##程序极其简陋，稳定和安全毫无保障，仅仅用于图省钱省事还想多一层云备份的情况
+##仅建议用于linux不完整的安卓手机，云服务器、实体机、树莓派建议使用知名开源或商业软件，如bluebeery等。
 
 附，国内常见IP摄像头串流地址:  
 >海康威视  
