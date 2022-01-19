@@ -2,7 +2,7 @@
 这是一个用Python编写的NVR(网络硬盘录像机)脚本，  
 利用百度网盘进行视频的云存储
 可以将废旧的安卓手机变成NVR节省购买云存储的钱。
-##Windows Linux Mac
+## Windows Linux Mac
 安装python
 
 `pip install bypy`  
@@ -13,8 +13,8 @@
 编辑pyNvr.py,修改配置（摄像头名称camname、串流地址url、本地存储路径pwd，单个视频时长blocktime,开启储存到百度网盘upyoby，上传完成后删除本地文件re_af_up）
 
 运行：  
-`nohup python pyNvr.py &`
-##安卓手机
+`nohup python pyNvr.py &`  
+## 安卓手机
 在安卓手机上，使用termux无法安装opencv，可以通过tmoe部署proot容器中的ubuntu  
 安装tmoe:  
 `bash -c "$(curl -Lv gitee.com/mo2/linux/raw/master/debian.sh)"`  
