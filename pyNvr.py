@@ -16,54 +16,75 @@ import time
 import threading
 from bypy import ByPy
 
-
 #config
 ##camera's name
 camname='cam01'
 ##local file path
 pwd='G://videos//'
-##video stream url
-url='rtsp://username:password@ip:port/videopath'
+##video stream url(see readme)
+url='rtsp://admin:password@ip:port/videopath'
 ##single video length（minute  1-1000）
 blocktime=1
+##up load to baidu netdisk? True or False.
+uptoby = True
+##remove after upload? True or False.
+re_af_up = True
 
 
-def bysync(file,path):
+def bysync(file,path,i):
+    if i >= 3:
+        print(file+"upload error,check the internet, netdisk account and path.")
+        return
     time.sleep(10)
     bp = ByPy()
     code = bp.upload(file,'/'+path+'/')
     if code == 0:
-        os.remove(file)
-    
+        if re_af_up == True:
+            os.remove(file)
+        print(file+" successfuly uploaded!")
+    else:
+        i=i+1
+        print(file+"retry :"+str(i))
+        bysync(file,path,i)
 
 
-cap = cv2.VideoCapture(url)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-fps = cap.get(cv2.CAP_PROP_FPS)
-size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-pwd = pwd + camname+'//'
+def capture(url,camname,pwd,blocktime,uptoby,re_af_up):
+    try:
+        cap = cv2.VideoCapture(url)
+    except:
+        print("can not capture video stream, please check your url or internet.")
+    else:
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+        print("fps:"+str(fps))
+        size = (int(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))), int(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+        print("video size:"+str(size))
+        pwd = pwd + camname+'//'
 
-
-
-while True:
-    cu_pwd = pwd+str(time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime()))+'.avi'
-    out = cv2.VideoWriter(cu_pwd, fourcc,fps, size)
-    ret,frame = cap.read()
-    start_time=int(time.time())
-    brk = 0
-    while ret:
-        if int(time.time()-start_time >= blocktime*60 ):
-            sync = threading.Thread(target=bysync, args=(cu_pwd,camname))
-            sync.start()
-            break
+    while True:
+        cu_pwd = pwd+str(time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime()))+'.avi'
+        out = cv2.VideoWriter(cu_pwd, fourcc,fps, size)
         ret,frame = cap.read()
-        #cv2.imshow("frame",frame)
-        out.write(frame)
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
-            #brk = 1
+        start_time=int(time.time())
+        brk = 0
+        while ret:
+            if int(time.time()-start_time >= blocktime*30):
+                if uptoby == True:
+                    sync = threading.Thread(target=bysync, args=(cu_pwd,camname,0))
+                    sync.start()
+                out.release()
+                break
+            ret,frame = cap.read()
+            #cv2.imshow("frame",frame)
+            out.write(frame)
+            #if cv2.waitKey(1) & 0xFF == ord('q'):
+                #brk = 1
+                #break
+        #if brk == 1:
             #break
-    #if brk == 1:
-        #break
-cv2.destroyAllWindows()
-cap.release()
-out.release()
+    cv2.destroyAllWindows()
+    cap.release()
+    out.release()
+
+if __name__ == '__main__':
+    capture(url,camname,pwd,blocktime,uptoby,re_af_up)
