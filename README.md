@@ -18,7 +18,7 @@
 `pip install opencv-python`Aidlux不需要。  
 `bypy info`  
 复制链接粘贴到浏览器打开，登录，填写授权码。  
-创建保存视频的文件夹,例如：
+创建保存视频的文件夹,例如：  
 `mkdir /home/videos`  
 `mkdir /home/videos/cam01`  
 一定要创建好路径，并且跟配置的路径一致，最后一层文件夹的名称为摄像头名称（camname）,参数pwd写到倒数第二层文件夹，以//结尾即可。
