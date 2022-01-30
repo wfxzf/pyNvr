@@ -24,7 +24,7 @@ if True: #config
     ##local file path
     pwd='G://videos//'
     ##video stream url(see readme)
-    url='rtsp://baipiaoguai:xiaciyiding@192.168.3.42:8554/live'
+    url='rtsp://user:password@ip:port/videopath'
     ##single video length（minute  1-1000）
     blocktime=1
     ##up load to baidu netdisk? True or False.
