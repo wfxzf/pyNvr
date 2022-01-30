@@ -1,6 +1,6 @@
 # pyNvr
 这是一个用Python编写的NVR(网络硬盘录像机)脚本，  
-利用百度网盘进行视频的云存储
+利用阿里网盘或者百度网盘进行视频的云存储
 可以将废旧的安卓手机变成NVR节省购买云存储的钱。  
 
 ## 安卓手机
@@ -12,12 +12,16 @@
   
 **更建议使用Aidlux，安卓手机上Aidlux很方便，可以直接使用python，已经装好了opencv，比Termux更方便快捷。安装bypy并登录就可以直接使用了。**  
 
-安装python
-
+安装python  
+如果使用百度网盘：  
 `pip install bypy`  
-`pip install opencv-python`Aidlux不需要。  
 `bypy info`  
 复制链接粘贴到浏览器打开，登录，填写授权码。  
+如果使用阿里云盘：  
+`pip install aligo`
+
+安装opencv：  
+`pip install opencv-python`Aidlux不需要。  
 创建保存视频的文件夹,例如：  
 `mkdir /home/videos`  
 `mkdir /home/videos/cam01`  
@@ -26,6 +30,14 @@
 
 运行：  
 `cd pyNvr`  
+运行：  
+`python pyNvr.py`  
+如果使用阿里网盘，第一次使用需要登录（百度已经登陆过）  
+如果二维码显示错乱，需要新建一个终端，手动找到/tmp中的图片复制到手机可以直接访问的文件夹中，扫描，如：  
+`cp /tmp/tmp56sdcc.png /sdcard/DCIM/QRcode.png`  
+打开文件管理，找到DCIM文件夹下的这张图，扫描即可。  
+ 测试没有问题后，`ctrl + C`终止程序。  
+后台运行程序:  
 `nohup python pyNvr.py &`  
 
 ## 程序极其简陋，稳定和安全毫无保障，仅仅用于不含任何隐私信息、图省钱省事还想多一层云备份的情况
