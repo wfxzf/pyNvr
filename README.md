@@ -26,7 +26,7 @@
 `mkdir /home/videos`  
 `mkdir /home/videos/cam01`  
 一定要创建好路径，并且跟配置的路径一致，最后一层文件夹的名称为摄像头名称（camname）,参数pwd写到倒数第二层文件夹，以//结尾即可。
-编辑pyNvr.py,修改配置（摄像头名称camname、串流地址url、本地存储路径pwd，单个视频时长blocktime,开启储存到百度网盘upyoby，上传完成后删除本地文件re_af_up）
+编辑pyNvr.py,修改配置（选择netdisk（netdisk = 1为百度，2为阿里），摄像头名称camname、串流地址url、本地存储路径pwd，单个视频时长blocktime,开启储存到百度网盘upyoby，上传完成后删除本地文件re_af_up）
 
 运行：  
 `cd pyNvr`  
