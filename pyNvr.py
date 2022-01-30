@@ -14,24 +14,46 @@ import os
 import cv2
 import time
 import threading
-from bypy import ByPy
 
-#config
-##camera's name
-camname='cam01'
-##local file path
-pwd='G://videos//'
-##video stream url(see readme)
-url='rtsp://admin:password@ip:port/videopath'
-##single video length（minute  1-1000）
-blocktime=1
-##up load to baidu netdisk? True or False.
-uptoby = True
-##remove after upload? True or False.
-re_af_up = True
+if True: #config
+    #config
+    ##choose netdisk ( 1 for baidunetdisk ; 2 for alinetdisk )
+    netdisk = 1
+    ##camera's name
+    camname='cam01'
+    ##local file path
+    pwd='G://videos//'
+    ##video stream url(see readme)
+    url='rtsp://admin:password@ip:port/videopath'
+    ##single video length（minute  1-1000）
+    blocktime=1
+    ##up load to baidu netdisk? True or False.
+    uptoby = True
+    ##remove after upload? True or False.
+    re_af_up = True
 
+if True: #judge and pretreatment netdisk 
+    if netdisk == 1:
+        from bypy import ByPy
+    elif netdisk == 2:
+        from aligo import Aligo
+        ali = Aligo()
+        if os.path.exists('config.conf'):
+            with open("config.conf", "r") as f:
+                floder_id = f.readline()
+                f.close()
+        else:
+            creat_res = ali.create_folder(name='IPcameras', parent_file_id='root')
+            creat_res = ali.create_folder(name='IPcameras', parent_file_id=creat_res.file_id)
+            #global floder_id
+            floder_id = creat_res.file_id
+            with open("config.conf", "a") as f:
+                f.write(creat_res.file_id)
+                f.close()
+    else:
+        print('netdisk config error ,only for 1 or 2')
 
-def bysync(file,path,i):
+def bysync(file,path,i,re_af_up ):
     if i >= 3:
         print(file+"upload error,check the internet, netdisk account and path.")
         return
@@ -45,10 +67,34 @@ def bysync(file,path,i):
     else:
         i=i+1
         print(file+"retry :"+str(i))
-        bysync(file,path,i)
+        bysync(file,path,i,re_af_up)
+
+def alisync(file,path,i,re_af_up):
+    if i >= 3:
+        print(file+"upload error,check the internet, netdisk account and path.")
+        return
+    time.sleep(10)
+    ali = Aligo()
+    code = ''
+    global floder_id
+    try:
+        code = ali.upload_files(file_paths=[file],parent_file_id=floder_id)
+    except Exception as e:
+        print(e)
+        i=i+1
+        print(file+"retry :"+str(i))
+        alisync(file,path,i,re_af_up)
+    if code != '':
+        if re_af_up == True:
+            os.remove(file)
+        print(file+" successfuly uploaded!")
+    else:
+        i=i+1
+        print(file+"retry :"+str(i))
+        alisync(file,path,i,re_af_up)
 
 
-def capture(url,camname,pwd,blocktime,uptoby,re_af_up):
+def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
     try:
         cap = cv2.VideoCapture(url)
     except:
@@ -60,17 +106,25 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up):
         size = (int(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))), int(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         print("video size:"+str(size))
         pwd = pwd + camname+'//'
+        if os.path.exists(pwd) == False:
+            try:
+                os.mkdir(pwd)
+            except:
+                print("文件夹可能创建错误，请手动创建文件夹")
 
     while True:
         cu_pwd = pwd+str(time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime()))+'.avi'
         out = cv2.VideoWriter(cu_pwd, fourcc,fps, size)
         ret,frame = cap.read()
         start_time=int(time.time())
-        brk = 0
+        #brk = 0
         while ret:
-            if int(time.time()-start_time >= blocktime*30):
-                if uptoby == True:
-                    sync = threading.Thread(target=bysync, args=(cu_pwd,camname,0))
+            if int(time.time()-start_time >= blocktime*60):
+                if uptoby == True and netdisk == 1:
+                    sync = threading.Thread(target=bysync, args=(cu_pwd,camname,0,re_af_up))
+                    sync.start()
+                if uptoby == True and netdisk == 2:
+                    sync = threading.Thread(target=alisync, args=(cu_pwd,camname,0,re_af_up))
                     sync.start()
                 out.release()
                 break
@@ -87,4 +141,5 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up):
     out.release()
 
 if __name__ == '__main__':
-    capture(url,camname,pwd,blocktime,uptoby,re_af_up)
+    capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk)
+
