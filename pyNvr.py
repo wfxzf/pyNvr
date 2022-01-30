@@ -105,8 +105,8 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
         fps = int(cap.get(cv2.CAP_PROP_FPS))
         if fps >= 30:
             fps = 30
-        elif fps <=0:
-            fps = 1
+        elif fps <=10:
+            fps = 10
         print("fps:"+str(fps))
         size = (int(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))), int(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         print("video size:"+str(size))
