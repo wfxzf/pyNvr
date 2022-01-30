@@ -24,7 +24,7 @@ if True: #config
     ##local file path
     pwd='G://videos//'
     ##video stream url(see readme)
-    url='rtsp://admin:password@ip:port/videopath'
+    url='rtsp://baipiaoguai:xiaciyiding@192.168.3.42:8554/live'
     ##single video length（minute  1-1000）
     blocktime=1
     ##up load to baidu netdisk? True or False.
@@ -58,6 +58,7 @@ def bysync(file,path,i,re_af_up ):
         print(file+"upload error,check the internet, netdisk account and path.")
         return
     time.sleep(10)
+    print(file+"  uploading.......")
     bp = ByPy()
     code = bp.upload(file,'/'+path+'/')
     if code == 0:
@@ -102,6 +103,10 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
     else:
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         fps = int(cap.get(cv2.CAP_PROP_FPS))
+        if fps >= 30:
+            fps = 30
+        elif fps <=0:
+            fps = 1
         print("fps:"+str(fps))
         size = (int(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))), int(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         print("video size:"+str(size))
@@ -119,7 +124,7 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
         start_time=int(time.time())
         #brk = 0
         while ret:
-            if int(time.time()-start_time >= blocktime*60):
+            if int(time.time()-start_time >= blocktime*30):
                 if uptoby == True and netdisk == 1:
                     sync = threading.Thread(target=bysync, args=(cu_pwd,camname,0,re_af_up))
                     sync.start()
@@ -142,4 +147,3 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
 
 if __name__ == '__main__':
     capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk)
-
