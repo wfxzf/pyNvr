@@ -44,7 +44,7 @@ if True: #judge and pretreatment netdisk
                 f.close()
         else:
             creat_res = ali.create_folder(name='IPcameras', parent_file_id='root')
-            creat_res = ali.create_folder(name='IPcameras', parent_file_id=creat_res.file_id)
+            creat_res = ali.create_folder(name=camname, parent_file_id=creat_res.file_id)
             #global floder_id
             floder_id = creat_res.file_id
             with open("config.conf", "a") as f:
