@@ -17,15 +17,15 @@ import threading
 
 if True: #config
     #config
-    ##choose netdisk ( 1 for baidunetdisk ; 2 for alinetdisk )
+    ##choose netdisk ( 1 for baidu netdisk ; 2 for ali netdisk )
     netdisk = 1
     ##camera's name
     camname='cam01'
     ##local file path
     pwd='G://videos//'
     ##video stream url(see readme)
-    url='rtsp://user:password@ip:port/videopath'
-    ##single video length（minute  1-1000）
+    url='rtsp://baipiaoguai:xiaciyiding@192.168.3.42:8554/live'
+    ##single video length(minute  1-1000)
     blocktime=1
     ##up load to baidu netdisk? True or False.
     uptoby = True
@@ -44,8 +44,7 @@ if True: #judge and pretreatment netdisk
                 f.close()
         else:
             creat_res = ali.create_folder(name='IPcameras', parent_file_id='root')
-            creat_res = ali.create_folder(name=camname, parent_file_id=creat_res.file_id)
-            #global floder_id
+            creat_res = ali.create_folder(name='IPcameras', parent_file_id=creat_res.file_id)
             floder_id = creat_res.file_id
             with open("config.conf", "a") as f:
                 f.write(creat_res.file_id)
@@ -94,10 +93,11 @@ def alisync(file,path,i,re_af_up):
         print(file+"retry :"+str(i))
         alisync(file,path,i,re_af_up)
 
-
 def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
     try:
+        print("****")
         cap = cv2.VideoCapture(url)
+        print("successfully capture !")
     except:
         print("can not capture video stream, please check your url or internet.")
     else:
@@ -105,8 +105,8 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
         fps = int(cap.get(cv2.CAP_PROP_FPS))
         if fps >= 30:
             fps = 30
-        elif fps <=10:
-            fps = 10
+        elif fps <=0:
+            fps = 1
         print("fps:"+str(fps))
         size = (int(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))), int(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         print("video size:"+str(size))
@@ -115,7 +115,7 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
             try:
                 os.mkdir(pwd)
             except:
-                print("文件夹可能创建错误，请手动创建文件夹")
+                print("please crate folder manually")
 
     while True:
         cu_pwd = pwd+str(time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime()))+'.avi'
@@ -146,4 +146,8 @@ def capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk):
     out.release()
 
 if __name__ == '__main__':
-    capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk)
+    while(0):
+        try:
+            capture(url,camname,pwd,blocktime,uptoby,re_af_up,netdisk)
+        except:
+            continue
