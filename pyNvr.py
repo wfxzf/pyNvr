@@ -25,7 +25,7 @@ if True: #config
     ##local file path
     pwd='D://videos//'
     ##video stream url(see readme)
-    url='rtsp://admin:336.336.336@www.djrr.tk:9554/stream1'
+    url='rtsp://admin:admin@domain:port/stream1'
     #url='rtsp://127.0.0.1:8554/s001'
     ##single video length(minute  1-1000)
     blocktime = 1
